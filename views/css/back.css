@@ -1,0 +1,97 @@
+/**
+ * Copyright © 2019 Tomas Hubik <hubik.tomas@gmail.com>
+ *
+ * NOTICE OF LICENSE
+ *
+ * This file is part of QR Orders Manager PrestaShop module.
+ * 
+ * QR Orders Manager PrestaShop module is free software: you can redistribute
+ * it and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * QR Orders Manager PrestaShop module is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this QR Orders Manager
+ * module to newer versions in the future. If you wish to customize this module
+ * for your needs please refer to http://www.prestashop.com for more information.
+ *
+ *  @author Tomas Hubik <hubik.tomas@gmail.com>
+ *  @copyright  2019 Tomas Hubik
+ *  @license    https://www.gnu.org/licenses/gpl-3.0.en.html  GNU General Public License (GPLv3)
+ */
+
+@media (max-width: 767px) {
+    #content.bootstrap .page-head {
+        position: absolute;
+    }
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+    
+#qrordersmanager_search .control-label {
+    line-height: 31px;
+    vertical-align: middle;
+    margin: 0;
+}
+
+#qrordersmanager_search .form-group {
+    margin: 0;
+}
+
+#qrordersmanager_search #video {
+    background-color: #F5F8F9;
+    background-image: none;
+    border: 1px solid #C7D6DB;
+    border-radius: 3px;
+}
+
+#qrordersmanager_search video {
+    width: 100%;
+    height: auto;
+}
+
+#qrordersmanager_manage .big-badge {
+    color: #555;
+    font-size: 1.1em;
+    line-height: 1.3em;
+    padding: 5px 15px;
+    font-weight: 700;
+    border: solid 1px #d9d9d9;
+    background-color: #fff;
+    margin-left: 0.4em;
+    -webkit-border-radius: 25px;
+    border-radius: 25px;
+}
+
+@media (max-width: 767px) {
+    /* Do not display unit price and image in products list on small screens */
+    #qrordersmanager_manage #orderProducts th:first-child,
+    #qrordersmanager_manage #orderProducts th:nth-child(3),
+    #qrordersmanager_manage #orderProducts td:first-child,
+    #qrordersmanager_manage #orderProducts td:nth-child(3) {
+        display: none;
+    }
+}

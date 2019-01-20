@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>qrordersmanager</name>
+    <displayName><![CDATA[QR Orders Manager]]></displayName>
+    <version><![CDATA[0.0.1]]></version>
+    <description><![CDATA[Find orders by scanning QR codes and manage them in a simplified user interface.]]></description>
+    <author><![CDATA[Tomas Hubik]]></author><author_uri><![CDATA[https://github.com/hubiktomas]]></author_uri>
+    <tab><![CDATA[administration]]></tab>
+    <is_configurable>1</is_configurable>
+    <need_instance>0</need_instance>
+    <limited_countries></limited_countries>
+</module>
