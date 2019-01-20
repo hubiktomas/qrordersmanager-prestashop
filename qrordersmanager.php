@@ -54,8 +54,8 @@ class QrOrdersManager extends Module
         
         parent::__construct();
 
-        $this->displayName = $this->l("QR Orders Manager", 'qrordersmanager');
-        $this->description = $this->l("Find orders by scanning QR codes and manage them in a simplified user interface.", 'qrordersmanager');
+        $this->displayName = $this->l("QR Orders Manager");
+        $this->description = $this->l("Find orders by scanning QR codes and manage them in a simplified user interface.");
     }
 
     /**
@@ -135,7 +135,7 @@ class QrOrdersManager extends Module
             foreach (array_keys($fieldValues) as $key) {
                 Configuration::updateValue($key, Tools::getValue($key));
             }
-            $output .= $this->displayConfirmation($this->l("QR Orders Manager settings saved.", 'qrordersmanager'));
+            $output .= $this->displayConfirmation($this->l("QR Orders Manager settings saved."));
         }
         
         return $output . $this->renderSettingsForm();
@@ -153,32 +153,32 @@ class QrOrdersManager extends Module
             array(
                 'form' => array(
                     'legend' => array(
-                        'title' => $this->l("QR Orders Manager Settings", 'qrordersmanager'),
+                        'title' => $this->l("QR Orders Manager Settings"),
                         'icon' => 'icon-cog'
                     ),
                     'input' => array(
                          array(
                             'type' => 'switch',
-                            'label' => $this->l('Require confirmation of order status change', 'qrordersmanager'),
+                            'label' => $this->l('Require confirmation of order status change'),
                             'name' => 'QRORDERSMANAGER_CONFIRMATION',
                             'is_bool' => true,
-                            'desc' => $this->l('Every time you will try to click "Delivered" button, a confirmation message will show up to avoid accidental changes especially on mobile phones.', 'qrordersmanager'),
+                            'desc' => $this->l('Every time you will try to click "Delivered" button, a confirmation message will show up to avoid accidental changes especially on mobile phones.'),
                             'values' => array(
                                 array(
                                     'id' => 'active_on',
                                     'value' => true,
-                                    'label' => $this->l('Enabled', 'qrordersmanager')
+                                    'label' => $this->l('Enabled')
                                 ),
                                 array(
                                     'id' => 'active_off',
                                     'value' => false,
-                                    'label' => $this->l('Disabled', 'qrordersmanager')
+                                    'label' => $this->l('Disabled')
                                 )
                             ),
                         )
                     ),
                     'submit' => array(
-                        'title' => $this->l("Save", 'qrordersmanager')
+                        'title' => $this->l("Save")
                     )
                 )
             )
@@ -203,11 +203,11 @@ class QrOrdersManager extends Module
         $helper->submit_action = 'submit' . $this->name;
         $helper->toolbar_btn = array(
             'save' => array(
-                'desc' => $this->l("Save", 'qrordersmanager'),
+                'desc' => $this->l("Save"),
                 'href' => AdminController::$currentIndex . '&configure=' . $this->name . '&save=' . $this->name . '&token=' . Tools::getAdminTokenLite('AdminModules')
             ),
             'back' => array(
-                'desc' => $this->l("Back to List", 'qrordersmanager'),
+                'desc' => $this->l("Back to List"),
                 'href' => AdminController::$currentIndex . '&token=' . Tools::getAdminTokenLite('AdminModules')
             )
         );
