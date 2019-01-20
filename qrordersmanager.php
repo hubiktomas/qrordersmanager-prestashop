@@ -101,7 +101,7 @@ class QrOrdersManager extends Module
         $langs = Language::getLanguages(true);
         foreach ($langs as $lang) {
             $tab->name[$lang['id_lang']] = $name;
-		}
+        }
         $tab->class_name = $class_name;
         $tab->module = $this->name;
         $tab->active = 1;
