@@ -33,13 +33,13 @@
     <div class="col-lg-12">
         <span class="badge big-badge margin-bottom-10">
             <a href="{$link->getAdminLink('AdminOrders')|escape:'html':'UTF-8'}&amp;vieworder&amp;id_order={$order->id|intval}&amp;token={getAdminToken tab='AdminOrders'}">
-                <i class="icon-credit-card"></i> Order {l s="#" mod='qrordersmanager'}{$order->id}<br>{$order->reference}
+                <i class="icon-credit-card"></i> Order {l s='#' mod='qrordersmanager'}{$order->id}<br>{$order->reference}
             </a>
         </span>
         {if $customer->id}
             <span class="badge big-badge margin-bottom-10">
                 <a href="{$link->getAdminLink('AdminCustomers')|escape:'html':'UTF-8'}&amp;viewcustomer&amp;id_customer={$customer->id|intval}&amp;token={getAdminToken tab='AdminCustomers'}">
-                    <i class="icon-user"></i> Customer {l s="#" mod='qrordersmanager'}{$customer->id}<br>{$customer->firstname} {$customer->lastname} ({$customer->email})
+                    <i class="icon-user"></i> Customer {l s='#' mod='qrordersmanager'}{$customer->id}<br>{$customer->firstname} {$customer->lastname} ({$customer->email})
                 </a>
             </span>
         {else}

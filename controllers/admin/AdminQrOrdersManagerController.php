@@ -5,7 +5,7 @@
  * NOTICE OF LICENSE
  *
  * This file is part of QR Orders Manager PrestaShop module.
- * 
+ *
  * QR Orders Manager PrestaShop module is free software: you can redistribute
  * it and/or modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the License,
@@ -46,7 +46,8 @@ class AdminQrOrdersManagerController extends ModuleAdminController
     /**
      * @see Controller::setMedia()
      */
-    public function setMedia() {
+    public function setMedia()
+    {
         parent::setMedia();
         
         $this->addJquery();
@@ -73,7 +74,8 @@ class AdminQrOrdersManagerController extends ModuleAdminController
     /**
      * Handles ajax request for order data.
      */
-    public function ajaxProcessGetOrder() {
+    public function ajaxProcessGetOrder()
+    {
         $orderReference = trim(Tools::getValue('orderReference'));
         $order = $this->getOrderByReference($orderReference);
         if (!$order || !Validate::isLoadedObject($order)) {
@@ -86,7 +88,8 @@ class AdminQrOrdersManagerController extends ModuleAdminController
     /**
      * Changes order status to delivered.
      */
-    public function ajaxProcessSetOrderDelivered() {
+    public function ajaxProcessSetOrderDelivered()
+    {
         // Find order
         $orderReference = trim(Tools::getValue('orderReference'));
         $order = $this->getOrderByReference($orderReference);
@@ -140,7 +143,8 @@ class AdminQrOrdersManagerController extends ModuleAdminController
      *
      * @return Order object if found, false otherwise
      */
-    protected function getOrderByReference($orderReference) {
+    protected function getOrderByReference($orderReference)
+    {
         $orders = Order::getByReference($orderReference);
         if (!$orders || !$orders->count()) {
             return false;
@@ -156,7 +160,8 @@ class AdminQrOrdersManagerController extends ModuleAdminController
      *
      * $param Order $order Order object
      */
-    protected function displayOrder($order) {
+    protected function displayOrder($order)
+    {
         if (!$order || !Validate::isLoadedObject($order)) {
             $this->displayError($this->l('Order object invalid.', 'qrordersmanager'), true);
         }
@@ -211,7 +216,7 @@ class AdminQrOrdersManagerController extends ModuleAdminController
 
             if (is_array($product['customizedDatas'])) {
                 foreach ($product['customizedDatas'] as $customizationPerAddress) {
-                    foreach ($customizationPerAddress as $customizationId => $customization) {
+                    foreach ($customizationPerAddress as $customization) {
                         $customized_product_quantity += (int)$customization['quantity'];
                     }
                 }
@@ -253,7 +258,8 @@ class AdminQrOrdersManagerController extends ModuleAdminController
      * $param string $message Error message
      * @param bool $fatal Halts the whole execution if true
      */
-    protected function displayError($message, $fatal = false) {
+    protected function displayError($message, $fatal = false)
+    {
         $template = $this->createTemplate('error.tpl');
         if ($fatal) {
             $message = $this->l('FATAL ERROR', 'qrordersmanager') . ': '. $message;
@@ -272,7 +278,8 @@ class AdminQrOrdersManagerController extends ModuleAdminController
      *
      * @param array|string $content Template file(s) to be rendered.
      */
-    protected function displaySmartyContent($template) {
+    protected function displaySmartyContent($template)
+    {
         $this->content_only = true;
         $this->smartyOutputContent($template);
         $this->content_only = false;

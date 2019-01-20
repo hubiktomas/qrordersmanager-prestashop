@@ -5,7 +5,7 @@
  * NOTICE OF LICENSE
  *
  * This file is part of QR Orders Manager PrestaShop module.
- * 
+ *
  * QR Orders Manager PrestaShop module is free software: you can redistribute
  * it and/or modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the License,
@@ -98,7 +98,8 @@ class QrOrdersManager extends Module
         $tab = new Tab();
         $tab->id_parent = (int)Tab::getIdFromClassName($parent);
         $tab->name = array();
-        foreach (Language::getLanguages(true) as $lang)
+        $langs = Language::getLanguages(true);
+        foreach ($langs as $lang)
             $tab->name[$lang['id_lang']] = $name;
         $tab->class_name = $class_name;
         $tab->module = $this->name;
@@ -143,7 +144,7 @@ class QrOrdersManager extends Module
 
     /**
      * Renders the settings form for the configuration page.
-     * 
+     *
      * @return string form html
      */
     public function renderSettingsForm()
