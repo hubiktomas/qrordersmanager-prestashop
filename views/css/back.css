@@ -70,7 +70,10 @@
 
 #qrordersmanager_search video {
     width: 100%;
+	max-width: 700px;
     height: auto;
+	margin: 0 auto;
+	display: block;
 }
 
 #qrordersmanager_manage .big-badge {
