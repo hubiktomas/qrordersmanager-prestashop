@@ -140,6 +140,13 @@ class QrOrdersManager extends Module
             $output .= $this->displayConfirmation($this->l("QR Orders Manager settings saved."));
         }
         
+        $this->context->smarty->assign(array(
+            'module_dir', $this->_path,
+            'link' => Context::getContext()->link
+        ));
+
+        $output .= $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
+
         return $output . $this->renderSettingsForm();
     }
 
