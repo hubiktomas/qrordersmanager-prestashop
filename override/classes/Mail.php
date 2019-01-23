@@ -94,11 +94,11 @@ class Mail extends MailCore
         $blackPixel = "<td style='width: 8px; height: 8px; border: 0; padding: 0; background-color:black;'></td>\n";
         $whitePixel = "<td style='width: 8px; height: 8px; border: 0; padding: 0; background-color:white;'></td>\n";
         $qr = QRcode::text($text, false, "H");
-        $qrwidth = strlen($qr[0]);
+        $qrwidth = Tools::strlen($qr[0]);
         foreach ($qr as &$qrline) {
-            $qrline = strtr($qrline, array("0" => $whitePixel, "1" => $blackPixel)); 
+            $qrline = strtr($qrline, array("0" => $whitePixel, "1" => $blackPixel));
         }
-        $qr = join(str_repeat($whitePixel, 2) .    "</tr><tr>\n" .    str_repeat($whitePixel, 2), $qr); 
+        $qr = join(str_repeat($whitePixel, 2) .    "</tr><tr>\n" .    str_repeat($whitePixel, 2), $qr);
         $qr = "<table style='border-collapse: collapse; border-spacing: 0; margin: 0px auto;'>\n" .
             "<tr>\n" .
             str_repeat($whitePixel, $qrwidth + 4) .
