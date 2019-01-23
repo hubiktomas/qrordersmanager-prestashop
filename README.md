@@ -12,4 +12,5 @@ Installation
 4. Once you locate QR Orders Manager plugin in the modules list, click `Install`. You might see a pop-up informing you about the risks of unverified modules. It is safe to click `Proceed`.
 5. On the QR Orders Manager settings page that comes up after installing it, you will see some options you can change. There is help text underneath each field to guide you.
 6. Once the module is successfully installed, you will see `QR Orders Manager` in the admin menu under `Orders` submenu.
-7. That's it. Now you will be able to find orders by scanning a QR code containing order reference code and will be able to directly mark them as delivered.
+7. Update your e-mail templates to contain QR codes using two new variables - `{qr_code_html}` containing QR code encoded as a HTML table and `{qr_code_ascii}` containing ASCII encoded QR code to be used in plain text e-mail templates.
+8. That's it. Now you will be able to find orders by scanning a QR code containing order reference code and will be able to directly mark them as delivered.
