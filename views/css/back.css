@@ -89,6 +89,13 @@
     border-radius: 25px;
 }
 
+#qrordersmanager_manage #loader {
+    display: inline-block;
+    text-align: center;
+    height: 64px;
+    padding: 5px 0;
+}
+
 @media (max-width: 767px) {
     /* Do not display unit price and image in products list on small screens */
     #qrordersmanager_manage #orderProducts th:first-child,

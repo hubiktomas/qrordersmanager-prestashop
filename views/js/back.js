@@ -149,6 +149,7 @@ $(document).ready(function() {
  * @param object resultPanel Element, where to set HTML of the response
  */
 function findOrder(orderReference, ajaxUrl, resultPanel) {
+    resultPanel.html(getLoaderHtml("Loading order info"));
     $.ajax({
         type: 'POST',
         cache: false,
@@ -185,4 +186,15 @@ function markOrderAsDelivered(orderReference, ajaxUrl, resultPanel) {
     }).done(function (data) {
         resultPanel.html(data);
     });
+}
+
+/**
+ * Gets HTML code of a loader object
+ *
+ * @param string loaderText Text to be shown under the loader.
+ *
+ * @return Loader HTML code.
+ */
+function getLoaderHtml(loaderText) {
+    return '<div id="loader"><i class="process-icon-loading"></i>' + loaderText + '</div>';
 }
