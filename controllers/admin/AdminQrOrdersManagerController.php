@@ -35,6 +35,9 @@
  */
 class AdminQrOrdersManagerController extends ModuleAdminController
 {
+    /**
+     * @see ModuleAdminController::__construct()
+     */
     public function __construct()
     {
         $this->bootstrap = true;
@@ -76,17 +79,20 @@ class AdminQrOrdersManagerController extends ModuleAdminController
      */
     public function ajaxProcessGetOrder()
     {
+        // Find order
         $orderReference = trim(Tools::getValue('orderReference'));
         $order = $this->getOrderByReference($orderReference);
         if (!$order || !Validate::isLoadedObject($order)) {
             $this->displayError($this->l('Order with specified order reference not found.', 'qrordersmanager'));
             exit;
         }
+
+        // Display order info
         $this->displayOrder($order);
     }
 
     /**
-     * Changes order status to delivered.
+     * Handles ajax request to change order status to delivered.
      */
     public function ajaxProcessSetOrderDelivered()
     {
@@ -133,6 +139,7 @@ class AdminQrOrdersManagerController extends ModuleAdminController
             $this->displayError($this->l('An error occurred while changing order status, or we were unable to send an email to the customer.', 'qrordersmanager'));
         }
 
+        // Display order info
         $this->displayOrder($order);
     }
 
@@ -184,17 +191,17 @@ class AdminQrOrdersManagerController extends ModuleAdminController
         foreach ($history as &$order_state) {
             $order_state['text-color'] = Tools::getBrightness($order_state['color']) < 128 ? 'white' : 'black';
         }
-        // Load customer
 
+        // Load order customer
         $customer = new Customer($order->id_customer);
-        // Load messages
 
+        // Load order messages
         $messages = Message::getMessagesByOrderId($order->id, true);
-        // Load currency
 
+        // Load order currency
         $currency = new Currency($order->id_currency);
-        // Load and process products
 
+        // Load and process order products
         $products = $order->getProducts();
         foreach ($products as &$product) {
             if ($product['image'] != null) {
@@ -231,8 +238,8 @@ class AdminQrOrdersManagerController extends ModuleAdminController
             $product['refund_history'] = OrderSlip::getProductSlipDetail($product['id_order_detail']);
             $product['return_history'] = OrderReturn::getProductReturnDetail($product['id_order_detail']);
         }
-        // Load discounts
 
+        // Load order discounts
         $discounts = $order->getCartRules();
 
         $templateVars = array(
@@ -276,7 +283,7 @@ class AdminQrOrdersManagerController extends ModuleAdminController
     /**
      * Displays raw smarty content without header, footer, etc.
      *
-     * @param array|string $content Template file(s) to be rendered.
+     * @param array|string $template template file(s) to be rendered
      */
     protected function displaySmartyContent($template)
     {

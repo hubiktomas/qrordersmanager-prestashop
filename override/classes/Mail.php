@@ -117,6 +117,8 @@ class Mail extends MailCore
      * Generate HTML table encoded QR code with given string.
      *
      * @param string $text text to encode
+     *
+     * @return string HTML encoded QR code
      */
     public static function generateQrHtml($text)
     {
@@ -148,6 +150,8 @@ class Mail extends MailCore
      * Generate ASCII encoded QR code with given string.
      *
      * @param string $text text to encode
+     *
+     * @return string ASCII encoded QR code
      */
     public static function generateQrAscii($text)
     {
