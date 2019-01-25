@@ -104,6 +104,7 @@ $(document).ready(function() {
                 noVideoPanel.show();
             }
         }).catch((e) => {
+            resultPanel.html(getErrorHtml("FATAL ERROR: " + e.message));
             console.error(e);
         });
     }
@@ -134,6 +135,7 @@ $(document).ready(function() {
             orderReferenceInput.val(result.text);
             findOrder(result.text, ajaxUrl, resultPanel);
         }).catch((e) => {
+            resultPanel.html(getErrorHtml("FATAL ERROR: " + e.message));
             console.error(e);
         });
     }
@@ -160,6 +162,9 @@ function findOrder(orderReference, ajaxUrl, resultPanel) {
         }
     }).done(function (data) {
         resultPanel.html(data);
+    }).fail(function (jqXHR, error) {
+        resultPanel.html(getErrorHtml("FATAL ERROR: AJAX request failed."));
+        console.error(error);
     });
 }
 
@@ -183,6 +188,9 @@ function markOrderAsDelivered(orderReference, ajaxUrl, resultPanel) {
         }
     }).done(function (data) {
         resultPanel.html(data);
+    }).fail(function (jqXHR, error) {
+        resultPanel.html(getErrorHtml("FATAL ERROR: AJAX request failed."));
+        console.error(error);
     });
 }
 
@@ -195,4 +203,15 @@ function markOrderAsDelivered(orderReference, ajaxUrl, resultPanel) {
  */
 function getLoaderHtml(loaderText) {
     return '<div id="loader"><i class="process-icon-loading"></i>' + loaderText + '</div>';
+}
+
+/**
+ * Wraps error message to HTML to be dislayed in the user interface
+ *
+ * @param string errorText error message to be displayed
+ *
+ * @return string HTML code with the error message
+ */
+function getErrorHtml(errorText) {
+    return '<div class="row"><div class="col-lg-12"><p class="alert alert-danger">' + errorText + '</p></div></div>';
 }
