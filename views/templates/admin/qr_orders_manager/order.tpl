@@ -32,14 +32,14 @@
 <div class="row">
     <div class="col-lg-12">
         <span class="badge big-badge margin-bottom-10">
-            <a href="{$link->getAdminLink('AdminOrders')|escape:'html':'UTF-8'}&amp;vieworder&amp;id_order={$order->id|intval}&amp;token={getAdminToken tab='AdminOrders'}">
-                <i class="icon-credit-card"></i> Order {l s='#' mod='qrordersmanager'}{$order->id}<br>{$order->reference}
+            <a href="{$link->getAdminLink('AdminOrders')|escape:'html':'UTF-8'}&amp;vieworder&amp;id_order={$order->id|intval}">
+                <i class="icon-credit-card"></i> Order {l s='#' mod='qrordersmanager'}{$order->id|escape:'html':'UTF-8'}<br>{$order->reference|escape:'html':'UTF-8'}
             </a>
         </span>
         {if $customer->id}
             <span class="badge big-badge margin-bottom-10">
-                <a href="{$link->getAdminLink('AdminCustomers')|escape:'html':'UTF-8'}&amp;viewcustomer&amp;id_customer={$customer->id|intval}&amp;token={getAdminToken tab='AdminCustomers'}">
-                    <i class="icon-user"></i> Customer {l s='#' mod='qrordersmanager'}{$customer->id}<br>{$customer->firstname} {$customer->lastname} ({$customer->email})
+                <a href="{$link->getAdminLink('AdminCustomers')|escape:'html':'UTF-8'}&amp;viewcustomer&amp;id_customer={$customer->id|intval}">
+                    <i class="icon-user"></i> Customer {l s='#' mod='qrordersmanager'}{$customer->id|escape:'html':'UTF-8'}<br>{$customer->firstname|escape:'html':'UTF-8'} {$customer->lastname|escape:'html':'UTF-8'} ({$customer->email|escape:'html':'UTF-8'})
                 </a>
             </span>
         {else}
@@ -61,14 +61,14 @@
                         {foreach from=$history item=row key=key}
                             {if ($key == 0)}
                                 <tr>
-                                    <td style="background-color:{$row['color']}"><img src="../img/os/{$row['id_order_state']|intval}.gif" width="16" height="16" alt="{$row['ostate_name']|stripslashes}" /></td>
-                                    <td style="background-color:{$row['color']};color:{$row['text-color']}">{$row['ostate_name']|stripslashes}</td>
-                                    <td style="background-color:{$row['color']};color:{$row['text-color']}">{dateFormat date=$row['date_add'] full=true}</td>
+                                    <td style="background-color:{$row['color']|escape:'html':'UTF-8'}"><img src="../img/os/{$row['id_order_state']|intval}.gif" width="16" height="16" alt="{$row['ostate_name']|escape:'html':'UTF-8'}" /></td>
+                                    <td style="background-color:{$row['color']|escape:'html':'UTF-8'};color:{$row['text-color']|escape:'html':'UTF-8'}">{$row['ostate_name']|escape:'html':'UTF-8'}</td>
+                                    <td style="background-color:{$row['color']|escape:'html':'UTF-8'};color:{$row['text-color']|escape:'html':'UTF-8'}">{dateFormat date=$row['date_add'] full=true}</td>
                                 </tr>
                             {else}
                                 <tr>
                                     <td><img src="../img/os/{$row['id_order_state']|intval}.gif" width="16" height="16" /></td>
-                                    <td>{$row['ostate_name']|stripslashes}</td>
+                                    <td>{$row['ostate_name']|escape:'html':'UTF-8'}</td>
                                     <td>{dateFormat date=$row['date_add'] full=true}</td>
                                 </tr>
                             {/if}
@@ -83,8 +83,8 @@
                 <script>
                     $(document).ready(function() {
                         $("#markAsDeliveredButton").click(function() {
-                            if (!confirmationRequired || confirm("{l s='Really mark order %s as delivered?' sprintf=$order->reference mod='qrordersmanager'}")) {
-                                markOrderAsDelivered('{$order->reference}', ajaxUrl, $("#resultPanel"));
+                            if (!confirmationRequired || confirm("{l s='Really mark order %s as delivered?' sprintf=[$order->reference|escape:'javascript'] mod='qrordersmanager'}")) {
+                                markOrderAsDelivered('{$order->reference|escape:'javascript'}', ajaxUrl, $("#resultPanel"));
                             }
                         });
                     });
@@ -92,15 +92,15 @@
             {/if}
         </div>
     </div>
-    
+
     <div class="col-lg-8">
         <div class="panel">
             <h3><i class="icon-shopping-cart"></i> {l s='Products' mod='qrordersmanager'}</h3>
             {capture "TaxMethod"}
                 {if ($order->getTaxCalculationMethod() == $smarty.const.PS_TAX_EXC)}
-                    {l s='tax excluded.' mod='qrordersmanager'}
+                    {l s='tax excluded' mod='qrordersmanager'}
                 {else}
-                    {l s='tax included.' mod='qrordersmanager'}
+                    {l s='tax included' mod='qrordersmanager'}
                 {/if}
             {/capture}
             <div class="table-responsive">
@@ -113,7 +113,7 @@
                             </th>
                             <th>
                                 <span class="title_box ">{l s='Unit Price' mod='qrordersmanager'}</span>
-                                <small class="text-muted">{$smarty.capture.TaxMethod}</small>
+                                <small class="text-muted">{$smarty.capture.TaxMethod|escape:'html':'UTF-8'}</small>
                             </th>
                             <th class="text-center">
                                 <span class="title_box ">{l s='Qty' mod='qrordersmanager'}</span>
@@ -130,7 +130,7 @@
                             {/if}
                             <th>
                                 <span class="title_box ">{l s='Total' mod='qrordersmanager'}</span>
-                                <small class="text-muted">{$smarty.capture.TaxMethod}</small>
+                                <small class="text-muted">{$smarty.capture.TaxMethod|escape:'html':'UTF-8'}</small>
                             </th>
                         </tr>
                     </thead>
@@ -147,26 +147,26 @@
                                         {if isset($product['image']) && $product['image']->id|intval}{$product['image_tag']}{else}--{/if}
                                     </td>
                                     <td>
-                                        <a href="{$link->getAdminLink('AdminProducts')|escape:'html':'UTF-8'}&amp;id_product={$product['product_id']|intval}&amp;updateproduct&amp;token={getAdminToken tab='AdminProducts'}">
-                                            <span class="productName">{$product['product_name']} - {l s='Customized' mod='qrordersmanager'}</span><br />
-                                            {if ($product['product_reference'])}{l s='Reference:' mod='qrordersmanager'} {$product['product_reference']}<br />{/if}
-                                            {if ($product['product_supplier_reference'])}{l s='Supplier reference:' mod='qrordersmanager'} {$product['product_supplier_reference']}{/if}
+                                        <a href="{$link->getAdminLink('AdminProducts')|escape:'html':'UTF-8'}&amp;id_product={$product['product_id']|intval}&amp;updateproduct">
+                                            <span class="productName">{$product['product_name']|escape:'html':'UTF-8'} - {l s='Customized' mod='qrordersmanager'}</span><br />
+                                            {if ($product['product_reference'])}{l s='Reference:' mod='qrordersmanager'} {$product['product_reference']|escape:'html':'UTF-8'}<br />{/if}
+                                            {if ($product['product_supplier_reference'])}{l s='Supplier reference:' mod='qrordersmanager'} {$product['product_supplier_reference']|escape:'html':'UTF-8'}{/if}
                                         </a>
                                     </td>
                                     <td>
                                         <span class="product_price_show">{displayPrice price=$product_price currency=$currency->id|intval}</span>
                                     </td>
                                     <td class="productQuantity text-center">
-                                        {$product['customizationQuantityTotal']}
+                                        {$product['customizationQuantityTotal']|escape:'html':'UTF-8'}
                                     </td>
                                     {if ($order->hasBeenPaid())}
                                         <td class="productQuantity text-center">
-                                            {$product['customizationQuantityRefunded']}
+                                            {$product['customizationQuantityRefunded']|escape:'html':'UTF-8'}
                                         </td>
                                     {/if}
                                     {if ($order->hasBeenDelivered() || $order->hasProductReturned())}
                                         <td class="productQuantity text-center">
-                                            {$product['customizationQuantityReturned']}
+                                            {$product['customizationQuantityReturned']|escape:'html':'UTF-8'}
                                         </td>
                                     {/if}
                                     <td class="total_product">
@@ -186,10 +186,10 @@
                                                         {if ($type == Product::CUSTOMIZE_FILE)}
                                                             {foreach from=$datas item=data}
                                                                 <div class="form-group">
-                                                                    <span class="col-lg-4 control-label"><strong>{if $data['name']}{$data['name']}{else}{l s='Picture #' mod='qrordersmanager'}{$data@iteration}{/if}</strong></span>
+                                                                    <span class="col-lg-4 control-label"><strong>{if $data['name']}{$data['name']|escape:'html':'UTF-8'}{else}{l s='Picture #' mod='qrordersmanager'}{$data@iteration|intval}{/if}</strong></span>
                                                                     <div class="col-lg-8">
-                                                                        <a href="displayImage.php?img={$data['value']}&amp;name={$order->id|intval}-file{$data@iteration}" class="_blank">
-                                                                            <img class="img-thumbnail" src="{$smarty.const._THEME_PROD_PIC_DIR_}{$data['value']}_small" alt=""/>
+                                                                        <a href="displayImage.php?img={$data['value']|escape:'url'}&amp;name={$order->id|intval}-file{$data@iteration|intval}" class="_blank">
+                                                                            <img class="img-thumbnail" src="{$smarty.const._THEME_PROD_PIC_DIR_|escape:'html':'UTF-8'}{$data['value']|escape:'html':'UTF-8'}_small" alt=""/>
                                                                         </a>
                                                                     </div>
                                                                 </div>
@@ -197,9 +197,9 @@
                                                         {elseif ($type == Product::CUSTOMIZE_TEXTFIELD)}
                                                             {foreach from=$datas item=data}
                                                                 <div class="form-group">
-                                                                    <span class="col-lg-4 control-label"><strong>{if $data['name']}{l s='%s' sprintf=$data['name'] mod='qrordersmanager'}{else}{l s='Text #%s' sprintf=$data@iteration mod='qrordersmanager'}{/if}</strong></span>
+                                                                    <span class="col-lg-4 control-label"><strong>{if $data['name']}{l s='%s' sprintf=[$data['name']|escape:'html':'UTF-8'] mod='qrordersmanager'}{else}{l s='Text #%s' sprintf=[$data@iteration|intval] mod='qrordersmanager'}{/if}</strong></span>
                                                                     <div class="col-lg-8">
-                                                                        <p class="form-control-static">{$data['value']}</p>
+                                                                        <p class="form-control-static">{$data['value']|escape:'html':'UTF-8'}</p>
                                                                     </div>
                                                                 </div>
                                                             {/foreach}
@@ -209,17 +209,17 @@
                                             </td>
                                             <td>-</td>
                                             <td class="productQuantity text-center">
-                                                <span class="product_quantity_show{if (int)$customization['quantity'] > 1} red bold{/if}">{$customization['quantity']}</span>
+                                                <span class="product_quantity_show{if (int)$customization['quantity'] > 1} red bold{/if}">{$customization['quantity']|escape:'html':'UTF-8'}</span>
                                             </td>
                                             {if ($order->hasBeenPaid())}
                                                 <td class="text-center">
                                                     {if !empty($product['amount_refund'])}
-                                                        {l s='%s (%s refund)' sprintf=[$customization['quantity_refunded'], $product['amount_refund']] mod='qrordersmanager'}
+                                                        {l s='%s (%s refund)' sprintf=[$customization['quantity_refunded']|escape:'html':'UTF-8', $product['amount_refund']|escape:'html':'UTF-8'] mod='qrordersmanager'}
                                                     {/if}
                                                 </td>
                                             {/if}
                                             {if ($order->hasBeenDelivered())}
-                                                <td class="text-center">{$customization['quantity_returned']}</td>
+                                                <td class="text-center">{$customization['quantity_returned']|escape:'html':'UTF-8'}</td>
                                             {/if}
                                             <td class="total_product">
                                                 {if ($order->getTaxCalculationMethod() == $smarty.const.PS_TAX_EXC)}
@@ -236,22 +236,22 @@
                                 <tr class="product-line-row">
                                     <td>{if isset($product.image) && $product.image->id}{$product.image_tag}{/if}</td>
                                     <td>
-                                        <a href="{$link->getAdminLink('AdminProducts')|escape:'html':'UTF-8'}&amp;id_product={$product['product_id']|intval}&amp;updateproduct&amp;token={getAdminToken tab='AdminProducts'}">
-                                            <span class="productName">{$product['product_name']}</span><br />
-                                            {if $product.product_reference}{l s='Reference:' mod='qrordersmanager'} {$product.product_reference}<br />{/if}
-                                            {if $product.product_supplier_reference}{l s='Supplier reference:' mod='qrordersmanager'} {$product.product_supplier_reference}{/if}
+                                        <a href="{$link->getAdminLink('AdminProducts')|escape:'html':'UTF-8'}&amp;id_product={$product['product_id']|intval}&amp;updateproduct">
+                                            <span class="productName">{$product['product_name']|escape:'html':'UTF-8'}</span><br />
+                                            {if $product.product_reference}{l s='Reference:' mod='qrordersmanager'} {$product.product_reference|escape:'html':'UTF-8'}<br />{/if}
+                                            {if $product.product_supplier_reference}{l s='Supplier reference:' mod='qrordersmanager'} {$product.product_supplier_reference|escape:'html':'UTF-8'}{/if}
                                         </a>
                                     </td>
                                     <td>
                                         <span class="product_price_show">{displayPrice price=$product_price currency=$currency->id}</span>
                                     </td>
                                     <td class="productQuantity text-center">
-                                        <span class="product_quantity_show{if (int)$product['product_quantity'] - (int)$product['customized_product_quantity'] > 1} badge{/if}">{(int)$product['product_quantity'] - (int)$product['customized_product_quantity']}</span>
+                                        <span class="product_quantity_show{if (int)$product['product_quantity'] - (int)$product['customized_product_quantity'] > 1} badge{/if}">{((int)$product['product_quantity'] - (int)$product['customized_product_quantity'])|intval}</span>
                                     </td>
                                     {if ($order->hasBeenPaid())}
                                         <td class="productQuantity text-center">
                                             {if !empty($product['amount_refund'])}
-                                                {l s='%s (%s refund)' sprintf=[$product['product_quantity_refunded'], $product['amount_refund']] mod='qrordersmanager'}
+                                                {l s='%s (%s refund)' sprintf=[$product['product_quantity_refunded']|escape:'html':'UTF-8', $product['amount_refund']|escape:'html':'UTF-8'] mod='qrordersmanager'}
                                             {/if}
                                             {if count($product['refund_history'])}
                                                 <span class="tooltip">
@@ -268,14 +268,14 @@
                                     {/if}
                                     {if $order->hasBeenDelivered() || $order->hasProductReturned()}
                                         <td class="productQuantity text-center">
-                                            {$product['product_quantity_return']}
+                                            {$product['product_quantity_return']|escape:'html':'UTF-8'}
                                             {if count($product['return_history'])}
                                                 <span class="tooltip">
                                                     <span class="tooltip_label tooltip_button">+</span>
                                                     <span class="tooltip_content">
                                                     <span class="title">{l s='Return history' mod='qrordersmanager'}</span>
                                                     {foreach $product['return_history'] as $return}
-                                                        {l s='%1s - %2s - %3s' sprintf=[{dateFormat date=$return.date_add}, $return.product_quantity, $return.state] mod='qrordersmanager'}<br />
+                                                        {l s='%1s - %2s - %3s' sprintf=[{dateFormat date=$return.date_add}, $return.product_quantity|escape:'html':'UTF-8', $return.state|escape:'html':'UTF-8'] mod='qrordersmanager'}<br />
                                                     {/foreach}
                                                     </span>
                                                 </span>
@@ -294,7 +294,7 @@
             <div class="row margin-top-20">
                 <div class="col-md-6">
                     <div class="alert alert-warning">
-                        {l s='For this customer group, prices are displayed as: [1]%s[/1]' sprintf=[$smarty.capture.TaxMethod] tags=['<strong>'] mod='qrordersmanager'}
+                        {l s='For this customer group, prices are displayed as: [1]%s[/1]' sprintf=[$smarty.capture.TaxMethod|escape:'html':'UTF-8'] tags=['<strong>'] mod='qrordersmanager'}
                         {if !Configuration::get('PS_ORDER_RETURN')}
                             <br/><strong>{l s='Merchandise returns are disabled' mod='qrordersmanager'}</strong>
                         {/if}
@@ -322,7 +322,7 @@
                                     <tbody>
                                         {foreach from=$discounts item=discount}
                                             <tr>
-                                                <td>{$discount['name']}</td>
+                                                <td>{$discount['name']|escape:'html':'UTF-8'}</td>
                                                 <td>
                                                     {if $discount['value'] != 0.00}
                                                         -
