@@ -44,7 +44,7 @@ class QrOrdersManager extends Module
     {
         $this->name = 'qrordersmanager';
         $this->tab = 'administration';
-        $this->version = '0.0.1';
+        $this->version = '1.0.0';
         $this->author = 'Tomas Hubik';
         $this->author_uri = 'https://github.com/hubiktomas';
         $this->ps_versions_compliancy = array('min' => '1.5', 'max' => '1.6.9.9');

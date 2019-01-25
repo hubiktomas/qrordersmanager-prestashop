@@ -2,7 +2,7 @@
 <module>
     <name>qrordersmanager</name>
     <displayName><![CDATA[QR Orders Manager]]></displayName>
-    <version><![CDATA[0.0.1]]></version>
+    <version><![CDATA[1.0.0]]></version>
     <description><![CDATA[Find orders by scanning QR codes and manage them in a simplified user interface.]]></description>
     <author><![CDATA[Tomas Hubik]]></author><author_uri><![CDATA[https://github.com/hubiktomas]]></author_uri>
     <tab><![CDATA[administration]]></tab>
