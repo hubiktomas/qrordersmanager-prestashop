@@ -31,6 +31,6 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <p class="alert alert-danger">{$message}</p>
+        <p class="alert alert-danger">{$message|escape:'html':'UTF-8'}</p>
     </div>
 </div>

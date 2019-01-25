@@ -95,6 +95,6 @@
 </div>
 
 <script>
-    var ajaxUrl = '{$link->getAdminLink('AdminQrOrdersManager')|escape:'UTF-8'}';
+    var ajaxUrl = '{$link->getAdminLink('AdminQrOrdersManager')|escape:'javascript'}';
     var confirmationRequired = {if Configuration::get('QRORDERSMANAGER_CONFIRMATION')}true{else}false{/if};
 </script>
