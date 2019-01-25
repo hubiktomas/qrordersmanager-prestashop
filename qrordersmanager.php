@@ -51,7 +51,7 @@ class QrOrdersManager extends Module
         $this->need_instance = 0;
 
         $this->bootstrap = true;
-        
+
         parent::__construct();
 
         $this->displayName = $this->l("QR Orders Manager");
@@ -83,15 +83,15 @@ class QrOrdersManager extends Module
             $this->uninstallTab('AdminQrOrdersManager') &&
             Configuration::deleteByName('QRORDERSMANAGER_CONFIRMATION');
     }
-    
+
     /**
      * Adds tab to the admin menu.
      *
-     * @param string $parent Parent tab class name
-     * @param string $class_name Tab class name
-     * @param string $name Tab label
+     * @param string $parent parent tab class name
+     * @param string $class_name tab class name
+     * @param string $name tab label
      *
-     * @return New tab id if successful, false otherwise
+     * @return int new tab id if successful, false otherwise
      */
     protected function installTab($parent, $class_name, $name)
     {
@@ -107,13 +107,13 @@ class QrOrdersManager extends Module
         $tab->active = 1;
         return $tab->add();
     }
-    
+
     /**
      * Removes tab from the admin menu.
      *
-     * @param string $class_name Tab class name
+     * @param string $class_name tab class name
      *
-     * @return True if successful, false otherwise
+     * @return bool true if successful, false otherwise
      */
     protected function uninstallTab($class_name)
     {
@@ -130,7 +130,7 @@ class QrOrdersManager extends Module
     public function getContent()
     {
         $output = "";
-        
+
         // If values have been submitted in the form, process them
         if (Tools::isSubmit('submit' . $this->name)) {
             $fieldValues = $this->getConfigFieldValues();
@@ -139,13 +139,13 @@ class QrOrdersManager extends Module
             }
             $output .= $this->displayConfirmation($this->l("QR Orders Manager settings saved."));
         }
-        
+
         $this->context->smarty->assign(array(
             'module_dir', $this->_path,
             'link' => Context::getContext()->link
         ));
 
-        $output .= $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
+        $output .= $this->context->smarty->fetch($this->local_path . 'views/templates/admin/configure.tpl');
 
         return $output . $this->renderSettingsForm();
     }
@@ -200,7 +200,7 @@ class QrOrdersManager extends Module
         $helper->name_controller = $this->name;
         $helper->token = Tools::getAdminTokenLite('AdminModules');
         $helper->currentIndex = $this->context->link->getAdminLink('AdminModules', false)
-            .'&configure='.$this->name.'&tab_module='.$this->tab.'&module_name='.$this->name;
+            . '&configure=' . $this->name . '&tab_module=' . $this->tab . '&module_name=' . $this->name;
 
         $defaultLang = (int)Configuration::get('PS_LANG_DEFAULT');
         $helper->default_form_language = $defaultLang;
@@ -220,7 +220,7 @@ class QrOrdersManager extends Module
                 'href' => AdminController::$currentIndex . '&token=' . Tools::getAdminTokenLite('AdminModules')
             )
         );
-        
+
         $helper->tpl_vars = array(
             'fields_value' => $this->getConfigFieldValues(),
             'languages' => $this->context->controller->getLanguages(),

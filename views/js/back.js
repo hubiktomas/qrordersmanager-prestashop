@@ -4,7 +4,7 @@
  * NOTICE OF LICENSE
  *
  * This file is part of QR Orders Manager PrestaShop module.
- * 
+ *
  * QR Orders Manager PrestaShop module is free software: you can redistribute
  * it and/or modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the License,
@@ -44,72 +44,70 @@ $(document).ready(function() {
 
     // Start scanning on start button click
     startScanButton.click(startScan);
-    
+
     // Stop scanning on stop button click
     stopScanButton.click(stopScan);
-    
+
     // Find order on submit button click
     submitSearchButton.click(function() {
         findOrder(orderReferenceInput.val(), ajaxUrl, resultPanel);
     });
-    
+
     // Change camera ID and restart scanning on camera select change
     scanSourceSelect.change(function() {
         selectedDeviceId = this.value == -1 ? undefined : this.value;
         codeReader.reset();
         startScanning(selectedDeviceId);
     });
-    
+
     /**
      * Shows all scan related elements and starts scanning.
      */
     function startScan() {
-        codeReader.getVideoInputDevices()
-            .then((videoInputDevices) => {
-                startScanButton.hide();
-                stopScanButton.show();
-                scanSourceSelect.empty();
-                
-                // If we have at least one camera, we can continue
-                if (videoInputDevices.length > 0) {
-                    // Value -1 is converted to undefined if selected,
-                    // which means that main (environment facing) camera will be used
-                    scanSourceSelect.append(new Option('Default camera', -1));
-                    
-                    // Add cameras to the camera selector and try to match the one previously selected
-                    let selectedDeviceIdFound = false;
-                    videoInputDevices.forEach((element) => {
-                        scanSourceSelect.append(new Option(
-                            element.label,
-                            element.deviceId,
-                            selectedDeviceId == element.deviceId,
-                            selectedDeviceId == element.deviceId
-                        ));
-                        if (selectedDeviceId == element.deviceId) {
-                            selectedDeviceIdFound = true;
-                        }
-                    });
-                    
-                    // Overwrite previously selected area with undefined if it does not exist anymore
-                    if (!selectedDeviceIdFound) {
-                        selectedDeviceId = undefined;
-                    }
+        codeReader.getVideoInputDevices().then((videoInputDevices) => {
+            startScanButton.hide();
+            stopScanButton.show();
+            scanSourceSelect.empty();
 
-                    // Show camera selector if we have more than one camera
-                    if (videoInputDevices.length > 1) {
-                        scanSourcePanel.slideDown();
-                    }
+            // If we have at least one camera, we can continue
+            if (videoInputDevices.length > 0) {
+                // Value -1 is converted to undefined if selected,
+                // which means that main (environment facing) camera will be used
+                scanSourceSelect.append(new Option('Default camera', -1));
 
-                    startScanning(selectedDeviceId);
-                } else {
-                    noVideoPanel.show();
+                // Add cameras to the camera selector and try to match the one previously selected
+                let selectedDeviceIdFound = false;
+                videoInputDevices.forEach((element) => {
+                    scanSourceSelect.append(new Option(
+                        element.label,
+                        element.deviceId,
+                        selectedDeviceId == element.deviceId,
+                        selectedDeviceId == element.deviceId
+                    ));
+                    if (selectedDeviceId == element.deviceId) {
+                        selectedDeviceIdFound = true;
+                    }
+                });
+
+                // Overwrite previously selected area with undefined if it does not exist anymore
+                if (!selectedDeviceIdFound) {
+                    selectedDeviceId = undefined;
                 }
-            })
-            .catch((e) => {
-                console.error(e);
-            });
+
+                // Show camera selector if we have more than one camera
+                if (videoInputDevices.length > 1) {
+                    scanSourcePanel.slideDown();
+                }
+
+                startScanning(selectedDeviceId);
+            } else {
+                noVideoPanel.show();
+            }
+        }).catch((e) => {
+            console.error(e);
+        });
     }
-    
+
     /**
      * Stops scanning and hides all related elements.
      */
@@ -122,11 +120,11 @@ $(document).ready(function() {
         startScanButton.show();
         stopScanButton.hide();
     }
-    
+
     /**
      * Starts continuous scanning through camera until a QR code is recognized.
      *
-     * @param string devideId Id of camera to use for scanning.
+     * @param string devideId id of camera to use for scanning.
      */
     function startScanning(deviceId) {
         videoPanel.slideDown();
@@ -144,9 +142,9 @@ $(document).ready(function() {
 /**
  * Finds order based on order reference and sets manage order section using AJAX.
  *
- * @param string orderReference Order reference to search for.
- * @param string ajaxUrl Ajax URL for call.
- * @param object resultPanel Element, where to set HTML of the response
+ * @param string orderReference order reference to search for
+ * @param string ajaxUrl ajax URL for call
+ * @param object resultPanel element, where to set HTML of the response
  */
 function findOrder(orderReference, ajaxUrl, resultPanel) {
     resultPanel.html(getLoaderHtml("Loading order info"));
@@ -168,9 +166,9 @@ function findOrder(orderReference, ajaxUrl, resultPanel) {
 /**
  * Finds order based on order reference, updates its status to delivered and sets manage order section using AJAX.
  *
- * @param string orderReference Order reference to mark as delivered.
- * @param string ajaxUrl Ajax URL for call.
- * @param object resultPanel Element, where to set HTML of the response
+ * @param string orderReference order reference to mark as delivered
+ * @param string ajaxUrl ajax URL for call
+ * @param object resultPanel element, where to set HTML of the response
  */
 function markOrderAsDelivered(orderReference, ajaxUrl, resultPanel) {
     $.ajax({
@@ -189,11 +187,11 @@ function markOrderAsDelivered(orderReference, ajaxUrl, resultPanel) {
 }
 
 /**
- * Gets HTML code of a loader object
+ * Gets HTML code of a loader object.
  *
- * @param string loaderText Text to be shown under the loader.
+ * @param string loaderText text to be shown under the loader
  *
- * @return Loader HTML code.
+ * @return string loader HTML code
  */
 function getLoaderHtml(loaderText) {
     return '<div id="loader"><i class="process-icon-loading"></i>' + loaderText + '</div>';

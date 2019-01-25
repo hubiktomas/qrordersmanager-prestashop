@@ -42,14 +42,14 @@ class AdminQrOrdersManagerController extends ModuleAdminController
 
         parent::__construct();
     }
-    
+
     /**
      * @see Controller::setMedia()
      */
     public function setMedia()
     {
         parent::setMedia();
-        
+
         $this->addJquery();
         $this->addJS(_MODULE_DIR_ . $this->module->name . '/views/js/qrcamera.min.js');
         $this->addJS(_MODULE_DIR_ . $this->module->name . '/views/js/back.js');
@@ -67,10 +67,10 @@ class AdminQrOrdersManagerController extends ModuleAdminController
             'link' => Context::getContext()->link,
             'confirmation_required' => Configuration::get('QRORDERSMANAGER_CONFIRMATION')
         ));
-        
+
         return $this->setTemplate('qrordersmanager.tpl');
     }
-    
+
     /**
      * Handles ajax request for order data.
      */
@@ -84,7 +84,7 @@ class AdminQrOrdersManagerController extends ModuleAdminController
         }
         $this->displayOrder($order);
     }
-    
+
     /**
      * Changes order status to delivered.
      */
@@ -97,7 +97,7 @@ class AdminQrOrdersManagerController extends ModuleAdminController
             $this->displayError($this->l('Order with specified order reference not found.', 'qrordersmanager'));
             exit;
         }
-        
+
         // Check if the order is not already in delivered status
         $orderState = new OrderState(Configuration::get('PS_OS_DELIVERED'));
         if (!Validate::isLoadedObject($orderState)) {
@@ -107,7 +107,7 @@ class AdminQrOrdersManagerController extends ModuleAdminController
         if ($currentOrderState->id == $orderState->id) {
             $this->displayError($this->l('The order has already been assigned this status.', 'qrordersmanager'));
         }
-        
+
         // Create new OrderHistory
         $history = new OrderHistory();
         $history->id_order = $order->id;
@@ -135,13 +135,13 @@ class AdminQrOrdersManagerController extends ModuleAdminController
 
         $this->displayOrder($order);
     }
-    
+
     /**
-     * Gets order from order reference
+     * Gets order from order reference.
      *
-     * $param string $orderReference Order reference
+     * $param string $orderReference order reference
      *
-     * @return Order object if found, false otherwise
+     * @return Order|bool order object if found, false otherwise
      */
     protected function getOrderByReference($orderReference)
     {
@@ -154,18 +154,18 @@ class AdminQrOrdersManagerController extends ModuleAdminController
         }
         return $orders->getFirst();
     }
-    
+
     /**
      * Displays order page for ajax return.
      *
-     * $param Order $order Order object
+     * $param Order $order order object
      */
     protected function displayOrder($order)
     {
         if (!$order || !Validate::isLoadedObject($order)) {
             $this->displayError($this->l('Order object invalid.', 'qrordersmanager'), true);
         }
-        
+
         // Check if the order is not already in delivered status
         $showDeliveredButton = true;
         $orderState = new OrderState(Configuration::get('PS_OS_DELIVERED'));
@@ -178,31 +178,31 @@ class AdminQrOrdersManagerController extends ModuleAdminController
                 $showDeliveredButton = false;
             }
         }
-        
+
         // Load order history
         $history = $order->getHistory($this->context->language->id);
         foreach ($history as &$order_state) {
             $order_state['text-color'] = Tools::getBrightness($order_state['color']) < 128 ? 'white' : 'black';
         }
-        
         // Load customer
+
         $customer = new Customer($order->id_customer);
-        
         // Load messages
+
         $messages = Message::getMessagesByOrderId($order->id, true);
-        
         // Load currency
+
         $currency = new Currency($order->id_currency);
-        
         // Load and process products
+
         $products = $order->getProducts();
         foreach ($products as &$product) {
             if ($product['image'] != null) {
-                $name = 'product_mini_'.(int)$product['product_id'].(isset($product['product_attribute_id']) ? '_'.(int)$product['product_attribute_id'] : '').'.jpg';
-                // generate image cache, only for back office
-                $product['image_tag'] = ImageManager::thumbnail(_PS_IMG_DIR_.'p/'.$product['image']->getExistingImgPath().'.jpg', $name, 45, 'jpg');
-                if (file_exists(_PS_TMP_IMG_DIR_.$name)) {
-                    $product['image_size'] = getimagesize(_PS_TMP_IMG_DIR_.$name);
+                $name = 'product_mini_' . (int)$product['product_id'] . (isset($product['product_attribute_id']) ? '_' . (int)$product['product_attribute_id'] : '') . '.jpg';
+                // Generate image cache, only for back office
+                $product['image_tag'] = ImageManager::thumbnail(_PS_IMG_DIR_ . 'p/' . $product['image']->getExistingImgPath() . '.jpg', $name, 45, 'jpg');
+                if (file_exists(_PS_TMP_IMG_DIR_ . $name)) {
+                    $product['image_size'] = getimagesize(_PS_TMP_IMG_DIR_ . $name);
                 } else {
                     $product['image_size'] = false;
                 }
@@ -231,10 +231,10 @@ class AdminQrOrdersManagerController extends ModuleAdminController
             $product['refund_history'] = OrderSlip::getProductSlipDetail($product['id_order_detail']);
             $product['return_history'] = OrderReturn::getProductReturnDetail($product['id_order_detail']);
         }
-        
         // Load discounts
+
         $discounts = $order->getCartRules();
-        
+
         $templateVars = array(
             'order' => $order,
             'history' => $history,
@@ -246,17 +246,17 @@ class AdminQrOrdersManagerController extends ModuleAdminController
             'showDeliveredButton' => $showDeliveredButton,
             'link' => Context::getContext()->link
         );
-        
+
         $template = $this->createTemplate('order.tpl');
         $template->assign($templateVars);
         $this->displaySmartyContent($template);
     }
-    
+
     /**
      * Displays error notification for ajax return.
      *
-     * $param string $message Error message
-     * @param bool $fatal Halts the whole execution if true
+     * $param string $message error message
+     * @param bool $fatal halts the whole execution if true
      */
     protected function displayError($message, $fatal = false)
     {
@@ -272,7 +272,7 @@ class AdminQrOrdersManagerController extends ModuleAdminController
             die;
         }
     }
-    
+
     /**
      * Displays raw smarty content without header, footer, etc.
      *
