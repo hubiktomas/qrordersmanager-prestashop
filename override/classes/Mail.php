@@ -52,7 +52,7 @@ class Mail extends MailCore
      * @param int $id_shop shop ID
      * @param string|array $bcc bcc recipient(s) (email address)
      * @param string $reply_to email address for setting the Reply-To header
-     * 
+     *
      * @return bool|int false if the sending failed completly, otherwise number of successfull recipients
      */
     public static function Send(
